@@ -3,9 +3,28 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = current_user.posts
+    postArray = []
+    @posts = Post.includes(:comments,:likes)
+    @posts.each do |post|
+      postLikeArray = []
+      @likes = post.likes
+      @likes.each do |like|
+        postLikeArray << {user_id: like.user_id, name: user.name}
+      end
+      commentArray = []
+      @comments = post.comments.includes(:likes)
+      @comments.each do |comment|
+        commentLikeArray = []
+        @likes = comment.likes
+        @likes.each do |like|
+          commentLikeArray << {user_id: like.user_id, name: user.name}
+        end
+        commentArray << {comment: comment, likes: commentLikeArray}
+      end
+      postArray << {post: post, likes: postLikeArray}
+    end
 
-    render json: @posts
+    render json: {posts: postArray}
   end
 
   # GET /posts/1
@@ -41,7 +60,7 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.includes(:comments,:likes).find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
