@@ -21,7 +21,7 @@ class PostsController < ApplicationController
         end
         commentArray << {comment: comment, likes: commentLikeArray}
       end
-      postArray << {post: post, likes: postLikeArray}
+      postArray << {post: post, likes: postLikeArray, comments: commentArray}
     end
 
     render json: {posts: postArray}
