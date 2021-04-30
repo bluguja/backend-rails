@@ -19,9 +19,9 @@ class PostsController < ApplicationController
         @likes.each do |like|
           commentLikeArray << {user_id: like.user_id, name: like.user.name}
         end
-        commentArray << {comment: comment, likes: commentLikeArray}
+        commentArray << {comment: comment, name: comment.user.name ,  likes: commentLikeArray}
       end
-      postArray << {post: post, likes: postLikeArray, comments: commentArray}
+      postArray << {post: post, name: post.user.name ,likes: postLikeArray, comments: commentArray}
     end
 
     render json: {posts: postArray}
