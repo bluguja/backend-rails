@@ -2,15 +2,15 @@ class LikesController < ApplicationController
   before_action :set_post, only: [ :create,:destroy]
 
   def create
-    @like = current_user.likes.new
-    @like.likable_id = params[:likable_id]
-    @like.likable_type = params[:likable_type]
-    if @like.save
-      render json: {likes: @resource.likes.count}, status: :created
-    else
-      @destroy_like = current_user.likes.find_by({likable_id: @like.likable_id, likable_type: @like.likable_type})
-      @destroy_like.destroy
+    @like = @resource.likes.find_by(user_id: current_user.id)
+    if @like.present?
+      @like.destroy
       render json: {likes: @resource.likes.count}, status: :ok
+    else
+      @like = current_user.likes.new
+      @like.likable_id = params[:likable_id]
+      @like.likable_type = params[:likable_type]
+      render json: {likes: @resource.likes.count}, status: :created if @like.save
     end
   end
 

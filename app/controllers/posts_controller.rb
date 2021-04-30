@@ -9,7 +9,7 @@ class PostsController < ApplicationController
       postLikeArray = []
       @likes = post.likes
       @likes.each do |like|
-        postLikeArray << {user_id: like.user_id, name: user.name}
+        postLikeArray << {user_id: like.user_id, name: like.user.name}
       end
       commentArray = []
       @comments = post.comments.includes(:likes)
@@ -17,7 +17,7 @@ class PostsController < ApplicationController
         commentLikeArray = []
         @likes = comment.likes
         @likes.each do |like|
-          commentLikeArray << {user_id: like.user_id, name: user.name}
+          commentLikeArray << {user_id: like.user_id, name: like.user.name}
         end
         commentArray << {comment: comment, likes: commentLikeArray}
       end

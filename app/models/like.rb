@@ -1,5 +1,5 @@
 class Like < ApplicationRecord
   belongs_to :likable, polymorphic: true
   belongs_to :user
-  validates :likable_id, uniqueness: [:likable_type,:user_id]
+  validates :id, uniqueness: [:likable_type,:likable_id,:user_id]
 end
