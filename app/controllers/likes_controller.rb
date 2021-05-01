@@ -5,12 +5,12 @@ class LikesController < ApplicationController
     @like = @resource.likes.find_by(user_id: current_user.id)
     if @like.present?
       @like.destroy
-      render json: {likes: @resource.likes.count}, status: :ok
+      render json: {likes: @resource.likes.count}
     else
       @like = current_user.likes.new
       @like.likable_id = params[:likable_id]
       @like.likable_type = params[:likable_type]
-      render json: {likes: @resource.likes.count}, status: :created if @like.save
+      render json: {likes: @resource.likes.count} if @like.save
     end
   end
 

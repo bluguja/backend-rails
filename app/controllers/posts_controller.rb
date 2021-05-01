@@ -54,7 +54,12 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   def destroy
-    @post.destroy
+    post_id = @post.id
+    if @post.destroy
+      render json: {post_id: post_id}, status: :ok
+    else
+      render json: @post.errors, status: :unprocessable_entity
+    end
   end
 
   private

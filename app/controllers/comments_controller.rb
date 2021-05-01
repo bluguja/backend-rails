@@ -24,7 +24,12 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
+    comment_id = @comment.id
+    if @comment.destroy
+      render json: {comment_id: comment_id}, status: :ok
+    else
+      render json: @comment.errors, status: :unprocessable_entity
+    end
   end
 
   private
