@@ -1,5 +1,5 @@
 class LikesController < ApplicationController
-  before_action :set_post, only: [ :create,:destroy]
+  before_action :set_resource
 
   def create
     @like = @resource.likes.find_by(user_id: current_user.id)
@@ -15,7 +15,8 @@ class LikesController < ApplicationController
   end
 
   private
-  def set_post
+
+  def set_resource
     if params[:likable_type] === "Post"
       @resource = Post.find params[:likable_id]
     else

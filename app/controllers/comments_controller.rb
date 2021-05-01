@@ -1,23 +1,10 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:index, :create, :update, :destroy]
   before_action :set_comment, only: [:update, :destroy]
-
-  # GET /comments
-  def index
-    @comments = @post.comments
-
-    render json: @comments
-  end
-
-  # GET /comments/1
-  def show
-    render json: @comment
-  end
 
   # POST /comments
   def create
     @comment = current_user.comments.new(comment_params)
-    @comment.post = @post
+    @comment.post = set_post
 
     if @comment.save
       render json: @comment, status: :created
