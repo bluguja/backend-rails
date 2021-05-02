@@ -12,13 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2021_05_01_153238) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "comments", force: :cascade do |t|
     t.text "description"
-    t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -27,8 +24,8 @@ ActiveRecord::Schema.define(version: 2021_05_01_153238) do
 
   create_table "likes", force: :cascade do |t|
     t.string "likable_type", null: false
-    t.bigint "likable_id", null: false
-    t.bigint "user_id", null: false
+    t.integer "likable_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"
@@ -38,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_05_01_153238) do
 
   create_table "posts", force: :cascade do |t|
     t.text "description"
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
